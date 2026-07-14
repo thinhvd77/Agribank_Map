@@ -224,7 +224,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
           };
           element.addEventListener("click", handleClick);
 
-          const marker = new maplibregl.Marker({ element, anchor: "bottom" })
+          const marker = new maplibregl.Marker({ element, anchor: "center" })
             .setLngLat(branch.coordinates)
             .addTo(map as MapLibreMap);
 

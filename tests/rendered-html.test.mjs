@@ -46,10 +46,11 @@ test("server-renders the branch network page", async () => {
 });
 
 test("removes starter assets and keeps product metadata", async () => {
-  const [page, layout, branchMap, packageJson] = await Promise.all([
+  const [page, layout, branchMap, globals, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/BranchMap.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
@@ -57,6 +58,9 @@ test("removes starter assets and keeps product metadata", async () => {
   assert.doesNotMatch(layout, /Starter Project|codex-preview/);
   assert.match(branchMap, /02837515939/);
   assert.match(branchMap, /02839830317/);
+  assert.match(branchMap, /anchor: "center"/);
+  assert.doesNotMatch(branchMap, /anchor: "bottom"/);
+  assert.match(globals, /\.branch-marker\s*\{\s*position: absolute;/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("../public/og.png", import.meta.url));
   await assert.rejects(access(new URL("app/_sites-preview/", projectRoot)));
