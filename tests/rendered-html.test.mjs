@@ -38,7 +38,10 @@ test("server-renders the branch network page", async () => {
   assert.match(html, /PGD B\u00ecnh T\u00e2y/);
   assert.match(html, /PGD Ch\u00e1nh H\u01b0ng/);
   assert.match(html, /PGD D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c/);
-  assert.match(html, /http:\/\/localhost\/og\.png/);
+  assert.match(
+    html,
+    /https:\/\/agribank-chi-nhanh-8-map\.vodangthinh4\.chatgpt\.site\/og\.png/,
+  );
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });
 
