@@ -64,6 +64,11 @@ test("uses a local GeoJSON basemap and keeps product metadata", async () => {
   assert.match(branchMap, /\/data\/branch-network\.geojson/);
   assert.match(branchMap, /OpenStreetMap contributors/);
   assert.doesNotMatch(branchMap, /tiles\.openfreemap\.org|tile\.openstreetmap\.org/);
+  assert.doesNotMatch(branchMap, /maxBounds:/);
+  assert.match(branchMap, /minZoom:\s*10\.5/);
+  assert.match(branchMap, /\[isReady, selectedId, viewAllRequest\]/);
+  assert.match(page, /setViewAllRequest\(\(request\) => request \+ 1\)/);
+  assert.match(branchMap, /selectedIdRef\.current === "all"/);
   assert.match(globals, /\.branch-marker\s*\{\s*position: absolute;/);
   assert.doesNotMatch(globals, /transition:\s*scale/);
   assert.doesNotMatch(globals, /scale:\s*1\.16/);

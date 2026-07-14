@@ -98,6 +98,8 @@ export const BRANCHES: readonly Branch[] = [
 type BranchMapProps = {
   selectedId: string;
   onSelect: (id: string) => void;
+  onViewAll: () => void;
+  viewAllRequest: number;
 };
 
 type MarkerEntry = {
@@ -115,11 +117,6 @@ const ALL_BRANCH_BOUNDS: [[number, number], [number, number]] = [
     Math.max(...BRANCHES.map((branch) => branch.coordinates[0])),
     Math.max(...BRANCHES.map((branch) => branch.coordinates[1])),
   ],
-];
-
-const LOCAL_MAP_BOUNDS: [[number, number], [number, number]] = [
-  [106.62, 10.72],
-  [106.7, 10.762],
 ];
 
 const LOCAL_MAP_STYLE: StyleSpecification = {
@@ -375,18 +372,41 @@ function createPopupContent(branch: Branch) {
   return content;
 }
 
-export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
+function fitAllBranches(map: MapLibreMap, duration: number) {
+  const compactViewport = window.matchMedia("(max-width: 900px)").matches;
+
+  map.fitBounds(ALL_BRANCH_BOUNDS, {
+    padding: compactViewport
+      ? { top: 72, right: 36, bottom: 100, left: 36 }
+      : { top: 135, right: 100, bottom: 105, left: 100 },
+    maxZoom: 13.5,
+    duration,
+    essential: false,
+  });
+}
+
+export default function BranchMap({
+  selectedId,
+  onSelect,
+  onViewAll,
+  viewAllRequest,
+}: BranchMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const popupRef = useRef<MapLibrePopup | null>(null);
   const markersRef = useRef<Map<string, MarkerEntry>>(new Map());
   const onSelectRef = useRef(onSelect);
+  const selectedIdRef = useRef(selectedId);
   const [isReady, setIsReady] = useState(false);
   const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+
+  useEffect(() => {
+    selectedIdRef.current = selectedId;
+  }, [selectedId]);
 
   useEffect(() => {
     const container = mapContainerRef.current;
@@ -397,6 +417,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
     let cancelled = false;
     let map: MapLibreMap | null = null;
     let resizeObserver: ResizeObserver | null = null;
+    let resizeFrame: number | null = null;
     let handleMapError:
       | ((event: { error?: { message?: string } }) => void)
       | null = null;
@@ -413,9 +434,8 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
           style: LOCAL_MAP_STYLE,
           center: [106.6607, 10.7433],
           zoom: 12.3,
-          minZoom: 11.5,
+          minZoom: 10.5,
           maxZoom: 17,
-          maxBounds: LOCAL_MAP_BOUNDS,
           renderWorldCopies: false,
         });
         mapRef.current = map;
@@ -471,7 +491,16 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
           if (!cancelled) setIsReady(true);
         });
 
-        resizeObserver = new ResizeObserver(() => map?.resize());
+        resizeObserver = new ResizeObserver(() => {
+          if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+          resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = null;
+            map?.resize();
+            if (map?.loaded() && selectedIdRef.current === "all") {
+              fitAllBranches(map, 0);
+            }
+          });
+        });
         resizeObserver.observe(mapContainer);
       } catch {
         if (!cancelled) setMapError(true);
@@ -482,6 +511,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
 
     return () => {
       cancelled = true;
+      if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
       resizeObserver?.disconnect();
       markers.forEach(({ marker, element, handleClick }) => {
         element.removeEventListener("click", handleClick);
@@ -516,14 +546,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
     popupRef.current?.remove();
 
     if (!branch) {
-      map.fitBounds(ALL_BRANCH_BOUNDS, {
-        padding: compactViewport
-          ? { top: 80, right: 28, bottom: 120, left: 28 }
-          : { top: 135, right: 100, bottom: 105, left: 100 },
-        maxZoom: 13.5,
-        duration: cameraDuration,
-        essential: false,
-      });
+      fitAllBranches(map, cameraDuration);
       return;
     }
 
@@ -545,7 +568,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
         .setDOMContent(createPopupContent(branch))
         .addTo(map);
     }
-  }, [isReady, selectedId]);
+  }, [isReady, selectedId, viewAllRequest]);
 
   return (
     <div className="map-shell">
@@ -572,7 +595,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
           type="button"
           className="map-reset-button"
           aria-pressed={selectedId === "all"}
-          onClick={() => onSelect("all")}
+          onClick={onViewAll}
         >
           {"Xem to\u00e0n b\u1ed9"}
         </button>

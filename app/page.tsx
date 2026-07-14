@@ -44,6 +44,7 @@ function formatPhone(phone: string) {
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState("all");
+  const [viewAllRequest, setViewAllRequest] = useState(0);
   const branchListRef = useRef<HTMLOListElement>(null);
   const branchItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
 
@@ -51,6 +52,11 @@ export default function Home() {
     () => BRANCHES.find((branch) => branch.id === selectedId),
     [selectedId],
   );
+
+  const showAllBranches = () => {
+    setSelectedId("all");
+    setViewAllRequest((request) => request + 1);
+  };
 
   useEffect(() => {
     if (selectedId === "all" || !window.matchMedia("(max-width: 900px)").matches) {
@@ -84,7 +90,7 @@ export default function Home() {
         <button
           className="mobile-all-button"
           type="button"
-          onClick={() => setSelectedId("all")}
+          onClick={showAllBranches}
           aria-label={COPY.viewAll}
           aria-pressed={selectedId === "all"}
         >
@@ -127,7 +133,7 @@ export default function Home() {
           <button
             className={`overview-card ${selectedId === "all" ? "is-selected" : ""}`}
             type="button"
-            onClick={() => setSelectedId("all")}
+            onClick={showAllBranches}
             aria-pressed={selectedId === "all"}
           >
             <span className="overview-icon" aria-hidden="true">+</span>
@@ -211,7 +217,12 @@ export default function Home() {
           </div>
         </div>
 
-        <BranchMap selectedId={selectedId} onSelect={setSelectedId} />
+        <BranchMap
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          onViewAll={showAllBranches}
+          viewAllRequest={viewAllRequest}
+        />
 
         <div className="corridor-legend" aria-label={COPY.corridors}>
           <span className="legend-label">{COPY.corridorLabel}</span>
