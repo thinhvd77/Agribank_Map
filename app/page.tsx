@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import BranchMap, { BRANCHES } from "./BranchMap";
 
 const COPY = {
@@ -32,6 +32,10 @@ const COPY = {
   nguyenVanCuBridge: "C\u1ea7u Nguy\u1ec5n V\u0103n C\u1eeb",
   direction: "Ch\u1ec9 \u0111\u01b0\u1eddng",
   cityYear: "TP. H\u1ed2 CH\u00cd MINH - 2026",
+  fiveLocations: "05 \u0111i\u1ec3m giao d\u1ecbch",
+  mobileHint: "Ch\u1ea1m m\u1ed9t th\u1ebb \u0111\u1ec3 xem v\u1ecb tr\u00ed tr\u00ean b\u1ea3n \u0111\u1ed3",
+  swipe: "VU\u1ed0T",
+  viewing: "\u0110ang xem v\u1ecb tr\u00ed \u0111\u00e3 ch\u1ecdn",
 };
 
 function formatPhone(phone: string) {
@@ -40,14 +44,55 @@ function formatPhone(phone: string) {
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState("all");
+  const branchListRef = useRef<HTMLOListElement>(null);
+  const branchItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
 
   const selectedBranch = useMemo(
     () => BRANCHES.find((branch) => branch.id === selectedId),
     [selectedId],
   );
 
+  useEffect(() => {
+    if (selectedId === "all" || !window.matchMedia("(max-width: 900px)").matches) {
+      return;
+    }
+
+    const list = branchListRef.current;
+    const item = branchItemRefs.current[selectedId];
+    if (!list || !item) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const left = item.offsetLeft - (list.clientWidth - item.clientWidth) / 2;
+    list.scrollTo({
+      left: Math.max(0, left),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [selectedId]);
+
   return (
     <main className="network-app">
+      <header className="mobile-topbar">
+        <a className="mobile-brand" href="#network-map" aria-label={COPY.brandLabel}>
+          <span className="brand-mark" aria-hidden="true">A</span>
+          <span>
+            <strong>AGRIBANK</strong>
+            <small aria-live="polite">
+              {selectedBranch ? selectedBranch.name : COPY.fiveLocations}
+            </small>
+          </span>
+        </a>
+        <button
+          className="mobile-all-button"
+          type="button"
+          onClick={() => setSelectedId("all")}
+          aria-label={COPY.viewAll}
+          aria-pressed={selectedId === "all"}
+        >
+          <strong>05</strong>
+          <small>{COPY.fivePoints}</small>
+        </button>
+      </header>
+
       <aside className="directory-panel" aria-label={COPY.directory}>
         <header className="brand-header">
           <a className="brand-lockup" href="#top" aria-label={COPY.brandLabel}>
@@ -71,6 +116,14 @@ export default function Home() {
         </section>
 
         <nav className="branch-directory" aria-label={COPY.select}>
+          <div className="mobile-directory-heading">
+            <div>
+              <strong>{COPY.select}</strong>
+              <small>{COPY.mobileHint}</small>
+            </div>
+            <span aria-hidden="true">{COPY.swipe} {"\u2192"}</span>
+          </div>
+
           <button
             className={`overview-card ${selectedId === "all" ? "is-selected" : ""}`}
             type="button"
@@ -85,18 +138,24 @@ export default function Home() {
             <span className="card-arrow" aria-hidden="true">{"\u2197"}</span>
           </button>
 
-          <ol className="branch-list">
-            {BRANCHES.map((branch, index) => {
+          <ol className="branch-list" ref={branchListRef}>
+            {BRANCHES.map((branch) => {
               const selected = branch.id === selectedId;
               return (
-                <li key={branch.id}>
+                <li
+                  key={branch.id}
+                  ref={(element) => {
+                    branchItemRefs.current[branch.id] = element;
+                  }}
+                  data-branch-id={branch.id}
+                >
                   <button
                     className={`branch-card ${selected ? "is-selected" : ""}`}
                     type="button"
                     onClick={() => setSelectedId(branch.id)}
                     aria-pressed={selected}
                   >
-                    <span className="branch-number">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="branch-number">{String(branch.number).padStart(2, "0")}</span>
                     <span className="branch-card-copy">
                       <small>{branch.type}</small>
                       <strong>{branch.name}</strong>
@@ -140,14 +199,14 @@ export default function Home() {
         </footer>
       </aside>
 
-      <section className="map-panel" aria-label={COPY.mapLabel}>
+      <section id="network-map" className="map-panel" aria-label={COPY.mapLabel}>
         <div className="map-heading">
           <div>
             <p className="eyebrow">{COPY.interactiveMap}</p>
             <h2>{selectedBranch ? selectedBranch.name : COPY.allNetwork}</h2>
           </div>
           <div className="map-status">
-            <span><i aria-hidden="true" />{COPY.showing}</span>
+            <span><i aria-hidden="true" />{selectedBranch ? COPY.viewing : COPY.showing}</span>
             <small>{COPY.mapHint}</small>
           </div>
         </div>

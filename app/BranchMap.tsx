@@ -264,6 +264,11 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
 
     const map = mapRef.current;
     const branch = BRANCHES.find((item) => item.id === selectedId);
+    const compactViewport = window.matchMedia("(max-width: 900px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const cameraDuration = prefersReducedMotion ? 0 : 900;
 
     markersRef.current.forEach(({ element }, branchId) => {
       const active = branchId === selectedId;
@@ -274,29 +279,35 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
     popupRef.current?.remove();
 
     if (!branch) {
-      const compactViewport = window.matchMedia("(max-width: 900px)").matches;
       map.fitBounds(ALL_BRANCH_BOUNDS, {
         padding: compactViewport
-          ? { top: 140, right: 42, bottom: 100, left: 42 }
+          ? { top: 80, right: 28, bottom: 120, left: 28 }
           : { top: 135, right: 100, bottom: 105, left: 100 },
         maxZoom: 13.5,
-        duration: 900,
+        duration: cameraDuration,
         essential: false,
       });
       return;
     }
 
+    const selectionOffset: [number, number] = compactViewport
+      ? [0, -64]
+      : [0, 0];
+
     map.flyTo({
       center: branch.coordinates,
-      zoom: 15.8,
-      duration: 900,
+      zoom: compactViewport ? 15.2 : 15.8,
+      offset: selectionOffset,
+      duration: cameraDuration,
       essential: false,
     });
 
-    popupRef.current
-      ?.setLngLat(branch.coordinates)
-      .setDOMContent(createPopupContent(branch))
-      .addTo(map);
+    if (!compactViewport) {
+      popupRef.current
+        ?.setLngLat(branch.coordinates)
+        .setDOMContent(createPopupContent(branch))
+        .addTo(map);
+    }
   }, [isReady, selectedId]);
 
   return (
@@ -315,7 +326,11 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
         </div>
       )}
 
-      <div className="map-actions" aria-label={"\u0110i\u1ec1u khi\u1ec3n b\u1ea3n \u0111\u1ed3"}>
+      <div
+        className="map-actions"
+        role="group"
+        aria-label={"\u0110i\u1ec1u khi\u1ec3n b\u1ea3n \u0111\u1ed3"}
+      >
         <button
           type="button"
           className="map-reset-button"
