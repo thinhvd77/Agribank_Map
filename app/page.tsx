@@ -5,8 +5,8 @@ import BranchMap, { BRANCHES } from "./BranchMap";
 
 const COPY = {
   directory: "Danh b\u1ea1 \u0111i\u1ec3m giao d\u1ecbch",
-  brandLabel: "Agribank Chi nh\u00e1nh 8",
-  branch8: "CHI NH\u00c1NH 8",
+  brandLabel: "Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh",
+  branchLabel: "CHI NH\u00c1NH B\u1eaeC TP. H\u1ed2 CH\u00cd MINH",
   networkMap: "B\u1ea2N \u0110\u1ed2 M\u1ea0NG L\u01af\u1edaI",
   region: "KHU V\u1ef0C TP. H\u1ed2 CH\u00cd MINH",
   network: "M\u1ea1ng l\u01b0\u1edbi",
@@ -105,7 +105,7 @@ export default function Home() {
             <span className="brand-mark" aria-hidden="true">A</span>
             <span>
               <strong>AGRIBANK</strong>
-              <small>{COPY.branch8}</small>
+              <small>{COPY.branchLabel}</small>
             </span>
           </a>
           <span className="live-dot"><i aria-hidden="true" />{COPY.networkMap}</span>
@@ -200,7 +200,7 @@ export default function Home() {
         </nav>
 
         <footer className="directory-footer">
-          <span>AGRIBANK - {COPY.branch8}</span>
+          <span>AGRIBANK - {COPY.branchLabel}</span>
           <span>{COPY.cityYear}</span>
         </footer>
       </aside>

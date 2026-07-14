@@ -33,7 +33,7 @@ test("server-renders the branch network page", async () => {
   const html = await response.text();
   assert.match(html, /<html lang="vi"/i);
   assert.match(html, /M\u1ea1ng l\u01b0\u1edbi \u0111i\u1ec3m giao d\u1ecbch/i);
-  assert.match(html, /H\u1ed9i s\u1edf/);
+  assert.match(html, /Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh/);
   assert.match(html, /Chi nh\u00e1nh Nam Hoa/);
   assert.match(html, /PGD B\u00ecnh T\u00e2y/);
   assert.match(html, /PGD Ch\u00e1nh H\u01b0ng/);
@@ -59,8 +59,10 @@ test("uses a local GeoJSON basemap and keeps product metadata", async () => {
   assert.doesNotMatch(layout, /Starter Project|codex-preview/);
   assert.match(branchMap, /02837515939/);
   assert.match(branchMap, /02839830317/);
-  assert.match(branchMap, /anchor: "center"/);
-  assert.doesNotMatch(branchMap, /anchor: "bottom"/);
+  assert.match(branchMap, /anchor: "bottom"/);
+  assert.doesNotMatch(branchMap, /anchor: "center"/);
+  assert.match(branchMap, /branch-marker-pin/);
+  assert.match(branchMap, /is-head-office/);
   assert.match(branchMap, /\/data\/branch-network\.geojson/);
   assert.match(branchMap, /OpenStreetMap contributors/);
   assert.doesNotMatch(branchMap, /tiles\.openfreemap\.org|tile\.openstreetmap\.org/);
@@ -69,9 +71,13 @@ test("uses a local GeoJSON basemap and keeps product metadata", async () => {
   assert.match(branchMap, /\[isReady, selectedId, viewAllRequest\]/);
   assert.match(page, /setViewAllRequest\(\(request\) => request \+ 1\)/);
   assert.match(branchMap, /selectedIdRef\.current === "all"/);
-  assert.match(globals, /\.branch-marker\s*\{\s*position: absolute;/);
+  assert.match(globals, /\.branch-marker\s*\{[\s\S]*?position:\s*absolute;/);
   assert.doesNotMatch(globals, /transition:\s*scale/);
   assert.doesNotMatch(globals, /scale:\s*1\.16/);
+  assert.match(globals, /\.branch-marker\.is-head-office/);
+  assert.match(globals, /transform:\s*rotate\(-45deg\)/);
+  assert.doesNotMatch(page, /CHI NH\\u00c1NH 8|branch8/);
+  assert.doesNotMatch(layout, /Chi nh\\u00e1nh 8/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   const network = JSON.parse(localMap);

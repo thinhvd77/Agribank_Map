@@ -28,7 +28,7 @@ export const BRANCHES: readonly Branch[] = [
   {
     id: "hoi-so",
     number: 1,
-    name: "H\u1ed9i s\u1edf",
+    name: "Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh",
     type: "H\u1ed8I S\u1ede",
     address:
       "925 - 925 (ABCD), T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng, TP. H\u1ed3 Ch\u00ed Minh",
@@ -452,7 +452,7 @@ export default function BranchMap({
           closeButton: true,
           closeOnClick: false,
           maxWidth: "310px",
-          offset: 24,
+          offset: 64,
         });
 
         map.addControl(
@@ -462,11 +462,15 @@ export default function BranchMap({
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
+          const pin = document.createElement("span");
           const number = document.createElement("span");
           element.type = "button";
-          element.className = "branch-marker";
+          element.className = `branch-marker${branch.id === "hoi-so" ? " is-head-office" : ""}`;
+          pin.className = "branch-marker-pin";
+          number.className = "branch-marker-number";
           number.textContent = String(branch.number).padStart(2, "0");
-          element.append(number);
+          pin.append(number);
+          element.append(pin);
           element.title = branch.name;
           element.setAttribute(
             "aria-label",
@@ -480,7 +484,7 @@ export default function BranchMap({
           };
           element.addEventListener("click", handleClick);
 
-          const marker = new maplibregl.Marker({ element, anchor: "center" })
+          const marker = new maplibregl.Marker({ element, anchor: "bottom" })
             .setLngLat(branch.coordinates)
             .addTo(map as MapLibreMap);
 
