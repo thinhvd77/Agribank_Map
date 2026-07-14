@@ -5,6 +5,7 @@ import type {
   Map as MapLibreMap,
   Marker as MapLibreMarker,
   Popup as MapLibrePopup,
+  StyleSpecification,
 } from "maplibre-gl";
 
 export type Branch = {
@@ -116,6 +117,224 @@ const ALL_BRANCH_BOUNDS: [[number, number], [number, number]] = [
   ],
 ];
 
+const LOCAL_MAP_BOUNDS: [[number, number], [number, number]] = [
+  [106.62, 10.72],
+  [106.7, 10.762],
+];
+
+const LOCAL_MAP_STYLE: StyleSpecification = {
+  version: 8,
+  sources: {
+    network: {
+      type: "geojson",
+      data: "/data/branch-network.geojson",
+      attribution:
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">\u00a9 OpenStreetMap contributors</a>',
+      maxzoom: 17,
+    },
+  },
+  layers: [
+    {
+      id: "background",
+      type: "background",
+      paint: { "background-color": "#f2eee6" },
+    },
+    {
+      id: "parks",
+      type: "fill",
+      source: "network",
+      filter: ["==", ["get", "kind"], "park"],
+      paint: {
+        "fill-color": "#dbe4d5",
+        "fill-opacity": 0.78,
+        "fill-outline-color": "#cbd7c5",
+      },
+    },
+    {
+      id: "water",
+      type: "fill",
+      source: "network",
+      filter: ["==", ["get", "kind"], "water"],
+      paint: {
+        "fill-color": "#c8dde3",
+        "fill-opacity": 0.9,
+        "fill-outline-color": "#b8d1d8",
+      },
+    },
+    {
+      id: "waterways",
+      type: "line",
+      source: "network",
+      filter: ["==", ["get", "kind"], "waterway"],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#afd0d9",
+        "line-opacity": 0.92,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.7, 16, 3.4],
+      },
+    },
+    {
+      id: "minor-road-casing",
+      type: "line",
+      source: "network",
+      minzoom: 13,
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["residential", "service", "unclassified", "cycleway", "pedestrian"]],
+        ],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#d5cfc5",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 13, 1.4, 17, 7],
+      },
+    },
+    {
+      id: "minor-roads",
+      type: "line",
+      source: "network",
+      minzoom: 13,
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["residential", "service", "unclassified", "cycleway", "pedestrian"]],
+        ],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#fffdf8",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 13, 0.8, 17, 5.2],
+      },
+    },
+    {
+      id: "tertiary-road-casing",
+      type: "line",
+      source: "network",
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["==", ["get", "class"], "tertiary"],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#cbc3b8",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 1, 16, 9.5],
+      },
+    },
+    {
+      id: "tertiary-roads",
+      type: "line",
+      source: "network",
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["==", ["get", "class"], "tertiary"],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#fcf8ee",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.55, 16, 7.3],
+      },
+    },
+    {
+      id: "major-road-casing",
+      type: "line",
+      source: "network",
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["in", ["get", "class"], ["literal", ["motorway", "trunk", "primary", "secondary"]]],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#bcb1a6",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 1.8, 16, 13.5],
+      },
+    },
+    {
+      id: "major-roads",
+      type: "line",
+      source: "network",
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["in", ["get", "class"], ["literal", ["motorway", "trunk", "primary", "secondary"]]],
+      ],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": [
+          "match",
+          ["get", "class"],
+          "motorway",
+          "#e8c7b8",
+          "trunk",
+          "#ebcfb5",
+          "primary",
+          "#f1dcc0",
+          "#f7e9d2",
+        ],
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 1.15, 16, 10.8],
+      },
+    },
+    {
+      id: "major-road-labels",
+      type: "symbol",
+      source: "network",
+      minzoom: 11.8,
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["in", ["get", "class"], ["literal", ["motorway", "trunk", "primary", "secondary", "tertiary"]]],
+        ["!=", ["get", "corridor"], true],
+      ],
+      layout: {
+        "symbol-placement": "line",
+        "symbol-spacing": 420,
+        "text-field": ["coalesce", ["get", "name"], ["get", "reference"]],
+        "text-font": ["Arial", "Noto Sans", "sans-serif"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 12, 9, 16, 12],
+        "text-max-angle": 35,
+      },
+      paint: {
+        "text-color": "#625e58",
+        "text-halo-color": "#f8f4ec",
+        "text-halo-width": 1.4,
+      },
+    },
+    {
+      id: "corridor-labels",
+      type: "symbol",
+      source: "network",
+      minzoom: 12,
+      filter: [
+        "all",
+        ["==", ["get", "kind"], "road"],
+        ["==", ["get", "corridor"], true],
+      ],
+      layout: {
+        "symbol-placement": "line",
+        "symbol-spacing": 360,
+        "text-field": ["coalesce", ["get", "name"], ["get", "reference"]],
+        "text-font": ["Arial", "Noto Sans", "sans-serif"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 12, 9.5, 16, 12.5],
+        "text-max-angle": 35,
+      },
+      paint: {
+        "text-color": "#6d2638",
+        "text-halo-color": "#fffaf1",
+        "text-halo-width": 1.6,
+      },
+    },
+  ],
+};
+
 function formatPhone(phone: string) {
   return phone.replace(/^(028)(\d{4})(\d{4})$/, "$1 $2 $3");
 }
@@ -172,25 +391,42 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
   useEffect(() => {
     const container = mapContainerRef.current;
     if (!container) return;
+    const mapContainer = container;
 
     const markers = markersRef.current;
     let cancelled = false;
     let map: MapLibreMap | null = null;
     let resizeObserver: ResizeObserver | null = null;
+    let handleMapError:
+      | ((event: { error?: { message?: string } }) => void)
+      | null = null;
 
     async function initialiseMap() {
       try {
         const maplibregl = await import("maplibre-gl");
         if (cancelled) return;
 
+        setMapError(false);
+
         map = new maplibregl.Map({
-          container,
-          style: "https://tiles.openfreemap.org/styles/positron",
+          container: mapContainer,
+          style: LOCAL_MAP_STYLE,
           center: [106.6607, 10.7433],
           zoom: 12.3,
-          attributionControl: true,
+          minZoom: 11.5,
+          maxZoom: 17,
+          maxBounds: LOCAL_MAP_BOUNDS,
+          renderWorldCopies: false,
         });
         mapRef.current = map;
+
+        handleMapError = (event) => {
+          const message = event.error?.message ?? "";
+          if (!cancelled && /branch-network\.geojson/i.test(message)) {
+            setMapError(true);
+          }
+        };
+        map.on("error", handleMapError);
 
         popupRef.current = new maplibregl.Popup({
           closeButton: true,
@@ -236,7 +472,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
         });
 
         resizeObserver = new ResizeObserver(() => map?.resize());
-        resizeObserver.observe(container);
+        resizeObserver.observe(mapContainer);
       } catch {
         if (!cancelled) setMapError(true);
       }
@@ -254,6 +490,7 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
       markers.clear();
       popupRef.current?.remove();
       popupRef.current = null;
+      if (handleMapError) map?.off("error", handleMapError);
       map?.remove();
       mapRef.current = null;
     };
@@ -321,8 +558,8 @@ export default function BranchMap({ selectedId, onSelect }: BranchMapProps) {
 
       {mapError && (
         <div className="map-error" role="alert">
-          <strong>{"B\u1ea3n \u0111\u1ed3 ch\u01b0a th\u1ec3 hi\u1ec3n th\u1ecb"}</strong>
-          <small>{"Vui l\u00f2ng ki\u1ec3m tra k\u1ebft n\u1ed1i Internet v\u00e0 t\u1ea3i l\u1ea1i trang."}</small>
+          <strong>{"Kh\u00f4ng th\u1ec3 t\u1ea3i d\u1eef li\u1ec7u b\u1ea3n \u0111\u1ed3"}</strong>
+          <small>{"Vui l\u00f2ng t\u1ea3i l\u1ea1i trang ho\u1eb7c li\u00ean h\u1ec7 qu\u1ea3n tr\u1ecb n\u1ebfu l\u1ed7i ti\u1ebfp di\u1ec5n."}</small>
         </div>
       )}
 
