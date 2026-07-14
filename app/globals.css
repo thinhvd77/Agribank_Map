@@ -634,7 +634,10 @@ a {
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px;
   font-weight: 800;
-  transition: scale 180ms ease, background 180ms ease;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .branch-marker > span {
@@ -644,7 +647,10 @@ a {
 .branch-marker:hover,
 .branch-marker.is-active {
   background: var(--burgundy-dark);
-  scale: 1.16;
+  border-color: #fff8e9;
+  box-shadow:
+    0 0 0 5px rgba(139, 30, 63, 0.2),
+    0 8px 18px rgba(20, 36, 53, 0.22);
 }
 
 .branch-marker:focus-visible {

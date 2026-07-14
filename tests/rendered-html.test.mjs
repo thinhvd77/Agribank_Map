@@ -61,6 +61,8 @@ test("removes starter assets and keeps product metadata", async () => {
   assert.match(branchMap, /anchor: "center"/);
   assert.doesNotMatch(branchMap, /anchor: "bottom"/);
   assert.match(globals, /\.branch-marker\s*\{\s*position: absolute;/);
+  assert.doesNotMatch(globals, /transition:\s*scale/);
+  assert.doesNotMatch(globals, /scale:\s*1\.16/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await access(new URL("../public/og.png", import.meta.url));
   await assert.rejects(access(new URL("app/_sites-preview/", projectRoot)));
