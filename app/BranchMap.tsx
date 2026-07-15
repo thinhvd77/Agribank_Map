@@ -28,15 +28,15 @@ export const BRANCHES: readonly Branch[] = [
   {
     id: "hoi-so",
     number: 1,
-    name: "Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh",
-    type: "H\u1ed8I S\u1ede",
+    name: "Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh",
+    type: "HỘI SỞ",
     address:
-      "925 - 925 (ABCD), T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng, TP. H\u1ed3 Ch\u00ed Minh",
+      "925 - 925 (ABCD), T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng",
     phone: "02837515939",
     connection: "T\u1ea1 Quang B\u1eedu \u00b7 QL50",
     coordinates: [106.6585755, 10.7339522],
     directionsUrl: directionsUrl(
-      "925 T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng, TP. H\u1ed3 Ch\u00ed Minh",
+      "925 T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng",
     ),
   },
   {
@@ -44,12 +44,12 @@ export const BRANCHES: readonly Branch[] = [
     number: 2,
     name: "Chi nh\u00e1nh Nam Hoa",
     type: "CHI NH\u00c1NH",
-    address: "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y, TP. H\u1ed3 Ch\u00ed Minh",
+    address: "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y",
     phone: "02839607865",
     connection: "H\u1eadu Giang \u00b7 Minh Ph\u1ee5ng",
     coordinates: [106.6439967, 10.7495461],
     directionsUrl: directionsUrl(
-      "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y, TP. H\u1ed3 Ch\u00ed Minh",
+      "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y",
     ),
   },
   {
@@ -57,12 +57,12 @@ export const BRANCHES: readonly Branch[] = [
     number: 3,
     name: "PGD B\u00ecnh T\u00e2y",
     type: "PH\u00d2NG GIAO D\u1ecaCH",
-    address: "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa, TP. H\u1ed3 Ch\u00ed Minh",
+    address: "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa",
     phone: "02837554673",
     connection: "Ch\u1ee3 L\u1edbn \u00b7 H\u1eadu Giang",
     coordinates: [106.6326919, 10.7458739],
     directionsUrl: directionsUrl(
-      "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa, TP. H\u1ed3 Ch\u00ed Minh",
+      "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa",
     ),
   },
   {
@@ -71,12 +71,12 @@ export const BRANCHES: readonly Branch[] = [
     name: "PGD Ch\u00e1nh H\u01b0ng",
     type: "PH\u00d2NG GIAO D\u1ecaCH",
     address:
-      "329 Ph\u1ea1m H\u00f9ng, KDC Him Lam, \u1ea4p 4A, X\u00e3 B\u00ecnh H\u01b0ng, TP. H\u1ed3 Ch\u00ed Minh",
+      "329 Ph\u1ea1m H\u00f9ng, KDC Him Lam, \u1ea4p 4A, X\u00e3 B\u00ecnh H\u01b0ng",
     phone: "02837583488",
     connection: "Ph\u1ea1m H\u00f9ng \u00b7 Nguy\u1ec5n V\u0103n Linh",
     coordinates: [106.6729081, 10.7350739],
     directionsUrl: directionsUrl(
-      "329 Ph\u1ea1m H\u00f9ng, X\u00e3 B\u00ecnh H\u01b0ng, TP. H\u1ed3 Ch\u00ed Minh",
+      "329 Ph\u1ea1m H\u00f9ng, X\u00e3 B\u00ecnh H\u01b0ng",
     ),
   },
   {
@@ -84,12 +84,12 @@ export const BRANCHES: readonly Branch[] = [
     number: 5,
     name: "PGD D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c",
     type: "PH\u00d2NG GIAO D\u1ecaCH",
-    address: "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng, TP. H\u1ed3 Ch\u00ed Minh",
+    address: "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng",
     phone: "02839830317",
     connection: "D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c \u00b7 C\u1ea7u Nguy\u1ec5n V\u0103n C\u1eeb",
     coordinates: [106.6884174, 10.7480873],
     directionsUrl: directionsUrl(
-      "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng, TP. H\u1ed3 Ch\u00ed Minh",
+      "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng",
     ),
     approximate: true,
   },
@@ -377,8 +377,8 @@ function fitAllBranches(map: MapLibreMap, duration: number) {
 
   map.fitBounds(ALL_BRANCH_BOUNDS, {
     padding: compactViewport
-      ? { top: 72, right: 36, bottom: 100, left: 36 }
-      : { top: 135, right: 100, bottom: 105, left: 100 },
+      ? { top: 145, right: 28, bottom: 100, left: 28 }
+      : { top: 190, right: 130, bottom: 105, left: 130 },
     maxZoom: 13.5,
     duration,
     essential: false,
@@ -462,19 +462,27 @@ export default function BranchMap({
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
+          const label = document.createElement("span");
+          const labelName = document.createElement("strong");
+          const labelAddress = document.createElement("small");
           const pin = document.createElement("span");
           const number = document.createElement("span");
           element.type = "button";
           element.className = `branch-marker${branch.id === "hoi-so" ? " is-head-office" : ""}`;
+          element.dataset.branchId = branch.id;
+          label.className = "branch-marker-label";
+          label.setAttribute("aria-hidden", "true");
+          labelName.textContent = branch.name;
+          labelAddress.textContent = branch.address;
           pin.className = "branch-marker-pin";
           number.className = "branch-marker-number";
           number.textContent = String(branch.number).padStart(2, "0");
+          label.append(labelName, labelAddress);
           pin.append(number);
-          element.append(pin);
-          element.title = branch.name;
+          element.append(label, pin);
           element.setAttribute(
             "aria-label",
-            `Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch ${branch.number}: ${branch.name}`,
+            `Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch ${branch.number}: ${branch.name}, ${branch.address}`,
           );
           element.setAttribute("aria-pressed", "false");
 

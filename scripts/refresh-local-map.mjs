@@ -42,7 +42,8 @@ const response = await fetch(endpoint, {
   headers: {
     "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
     "user-agent":
-      "Agribank-Branch-Map/1.0 (+https://agribank-chi-nhanh-8-map.vodangthinh4.chatgpt.site)",
+      process.env.OVERPASS_USER_AGENT ??
+      "Agribank-Branch-Map/1.0 (local GeoJSON refresh)",
   },
   body: new URLSearchParams({ data: query }),
 });

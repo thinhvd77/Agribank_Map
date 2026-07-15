@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --burgundy: #8b1e3f;
-  --burgundy-dark: #66132d;
+  --burgundy: #ae1c3f;
+  --burgundy-dark: #ae1c3f;
   --burgundy-soft: #f2dce3;
   --cream: #f6f0e5;
   --cream-deep: #e8ddcc;
@@ -96,14 +96,18 @@ a {
   display: grid;
   width: 44px;
   height: 44px;
+  flex: 0 0 auto;
   place-items: center;
-  border-radius: 11px 11px 4px 11px;
-  background: var(--burgundy);
+  overflow: hidden;
+  border-radius: 11px;
   box-shadow: 0 8px 22px rgba(139, 30, 63, 0.2);
-  color: var(--white);
-  font-family: Georgia, serif;
-  font-size: 25px;
-  font-weight: 700;
+}
+
+.brand-mark-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand-lockup strong,
@@ -623,6 +627,9 @@ a {
   --pin-size: 38px;
   --pin-inset: 8px;
   --pin-bottom: 8px;
+  --label-shift-x: 0px;
+  --label-arrow-shift-x: 0px;
+  --label-lift-y: 0px;
 
   position: absolute;
   z-index: 1;
@@ -637,6 +644,75 @@ a {
   font-size: 11px;
   font-weight: 800;
   appearance: none;
+}
+
+.branch-marker[data-branch-id="binh-tay"],
+.branch-marker[data-branch-id="hoi-so"] {
+  --label-shift-x: -60px;
+  --label-arrow-shift-x: 60px;
+}
+
+.branch-marker[data-branch-id="nam-hoa"],
+.branch-marker[data-branch-id="chanh-hung"] {
+  --label-shift-x: 60px;
+  --label-arrow-shift-x: -60px;
+}
+
+.branch-marker-label {
+  position: absolute;
+  bottom: calc(100% + 7px + var(--label-lift-y));
+  left: calc(50% + var(--label-shift-x));
+  width: 220px;
+  padding: 8px 10px 9px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(139, 30, 63, 0.22);
+  border-radius: 10px;
+  background: rgba(255, 253, 248, 0.96);
+  box-shadow: 0 7px 20px rgba(20, 36, 53, 0.14);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), "Segoe UI", Arial, sans-serif;
+  pointer-events: none;
+  text-align: left;
+  white-space: normal;
+}
+
+.branch-marker-label::after {
+  position: absolute;
+  bottom: -5px;
+  left: calc(50% + var(--label-arrow-shift-x));
+  width: 8px;
+  height: 8px;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: 1px solid rgba(139, 30, 63, 0.22);
+  border-bottom: 1px solid rgba(139, 30, 63, 0.22);
+  background: rgba(255, 253, 248, 0.96);
+  content: "";
+}
+
+.branch-marker-label strong,
+.branch-marker-label small {
+  display: block;
+}
+
+.branch-marker-label strong {
+  color: var(--burgundy);
+  font-size: 11px;
+  font-weight: 780;
+  line-height: 1.25;
+}
+
+.branch-marker-label small {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.branch-marker:hover .branch-marker-label,
+.branch-marker.is-active .branch-marker-label {
+  border-color: rgba(139, 30, 63, 0.42);
+  box-shadow: 0 9px 24px rgba(20, 36, 53, 0.18);
 }
 
 .branch-marker.is-head-office {
@@ -655,6 +731,7 @@ a {
 
 .branch-marker-pin {
   position: absolute;
+  z-index: 1;
   bottom: var(--pin-bottom);
   left: var(--pin-inset);
   display: grid;
@@ -882,9 +959,7 @@ a {
   .mobile-brand .brand-mark {
     width: 40px;
     height: 40px;
-    flex: 0 0 auto;
-    border-radius: 10px 10px 4px 10px;
-    font-size: 22px;
+    border-radius: 10px;
   }
 
   .mobile-brand > span:last-child {
@@ -1116,6 +1191,46 @@ a {
     --pin-size: 40px;
     --pin-inset: 9px;
     --pin-bottom: 8px;
+  }
+
+  .branch-marker[data-branch-id="binh-tay"] {
+    --label-shift-x: 48px;
+    --label-arrow-shift-x: -48px;
+  }
+
+  .branch-marker[data-branch-id="nam-hoa"] {
+    --label-shift-x: 16px;
+    --label-arrow-shift-x: -16px;
+    --label-lift-y: 74px;
+  }
+
+  .branch-marker[data-branch-id="hoi-so"] {
+    --label-shift-x: 20px;
+    --label-arrow-shift-x: -20px;
+    --label-lift-y: 90px;
+  }
+
+  .branch-marker[data-branch-id="chanh-hung"] {
+    --label-shift-x: -16px;
+    --label-arrow-shift-x: 16px;
+  }
+
+  .branch-marker[data-branch-id="duong-ba-trac"] {
+    --label-shift-x: -48px;
+    --label-arrow-shift-x: 48px;
+  }
+
+  .branch-marker-label {
+    width: 128px;
+    padding: 7px 8px 8px;
+  }
+
+  .branch-marker-label strong {
+    font-size: 10px;
+  }
+
+  .branch-marker-label small {
+    font-size: 8.5px;
   }
 
   .branch-marker.is-head-office {

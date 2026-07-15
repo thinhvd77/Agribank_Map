@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import BranchMap, { BRANCHES } from "./BranchMap";
 
@@ -79,11 +80,21 @@ export default function Home() {
     <main className="network-app">
       <header className="mobile-topbar">
         <a className="mobile-brand" href="#network-map" aria-label={COPY.brandLabel}>
-          <span className="brand-mark" aria-hidden="true">A</span>
+          <span className="brand-mark" aria-hidden="true">
+            <Image
+              className="brand-mark-image"
+              src="/logo.png"
+              alt=""
+              width={44}
+              height={44}
+              priority
+            />
+          </span>
           <span>
             <strong>AGRIBANK</strong>
             <small aria-live="polite">
-              {selectedBranch ? selectedBranch.name : COPY.fiveLocations}
+              {/* {selectedBranch ? selectedBranch.name : COPY.fiveLocations} */}
+              Chi nhánh Bắc Tp. HCM
             </small>
           </span>
         </a>
@@ -102,7 +113,16 @@ export default function Home() {
       <aside className="directory-panel" aria-label={COPY.directory}>
         <header className="brand-header">
           <a className="brand-lockup" href="#top" aria-label={COPY.brandLabel}>
-            <span className="brand-mark" aria-hidden="true">A</span>
+            <span className="brand-mark" aria-hidden="true">
+              <Image
+                className="brand-mark-image"
+                src="/logo.png"
+                alt=""
+                width={44}
+                height={44}
+                priority
+              />
+            </span>
             <span>
               <strong>AGRIBANK</strong>
               <small>{COPY.branchLabel}</small>

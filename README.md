@@ -1,98 +1,55 @@
-# vinext-starter
+# Bản đồ mạng lưới Agribank
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+Dự án Next.js độc lập hiển thị 5 điểm giao dịch của Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh. Nền bản đồ là GeoJSON cục bộ, không phụ thuộc máy chủ tile khi website hoạt động.
 
-## Prerequisites
+## Yêu cầu
 
-- Node.js `>=22.13.0`
+- Node.js 20.9 trở lên
+- npm
 
-## Quick Start
+## Chạy trên máy cá nhân
 
 ```bash
 npm install
 npm run dev
+```
+
+Mở `http://localhost:3000`.
+
+## Build và tự host
+
+```bash
 npm run build
+npm start
 ```
 
-This starter does not use `wrangler.jsonc`.
+Mặc định server chạy ở cổng `3000`. Có thể đổi cổng bằng biến môi trường `PORT`.
 
-## Included Shape
+Khi đưa lên domain riêng, sao chép `.env.example` thành `.env.local` và đổi `SITE_URL`:
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```env
+SITE_URL=https://map.example.com
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+Sau đó build lại để canonical URL và ảnh chia sẻ dùng đúng domain.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## Dữ liệu bản đồ
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+Snapshot đang dùng nằm tại `public/data/branch-network.geojson`. Trình duyệt chỉ tải file này từ chính website.
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+Khi cần làm mới dữ liệu từ OpenStreetMap:
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+```bash
+npm run map:refresh
+```
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+Lệnh làm mới gọi Overpass một lần và ghi lại snapshot. Có thể chọn endpoint và User-Agent khác bằng `OVERPASS_URL` và `OVERPASS_USER_AGENT`.
 
-## Useful Commands
+## Kiểm tra
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+```bash
+npm run lint
+npm test
+```
 
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+`npm test` build bằng Next.js và kiểm tra cấu hình local, dữ liệu GeoJSON cùng nội dung chính.

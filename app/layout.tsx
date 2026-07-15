@@ -21,8 +21,7 @@ const metadataCopy = {
   applicationName: "B\u1ea3n \u0111\u1ed3 m\u1ea1ng l\u01b0\u1edbi Agribank",
 };
 
-const siteUrl = "https://agribank-chi-nhanh-8-map.vodangthinh4.chatgpt.site";
-const imageUrl = `${siteUrl}/og.png`;
+const metadataBase = new URL(process.env.SITE_URL ?? "http://localhost:3000");
 const socialTitle =
   "M\u1ea1ng l\u01b0\u1edbi \u0111i\u1ec3m giao d\u1ecbch Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh";
 const socialDescription =
@@ -30,16 +29,17 @@ const socialDescription =
 
 export const metadata: Metadata = {
   ...metadataCopy,
-  alternates: { canonical: siteUrl },
+  metadataBase,
+  alternates: { canonical: "/" },
   openGraph: {
     title: socialTitle,
     description: socialDescription,
     locale: "vi_VN",
     type: "website",
-    url: siteUrl,
+    url: "/",
     images: [
       {
-        url: imageUrl,
+        url: "/og.png",
         width: 1732,
         height: 908,
         alt: socialTitle,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: socialTitle,
     description: socialDescription,
-    images: [imageUrl],
+    images: ["/og.png"],
   },
 };
 
