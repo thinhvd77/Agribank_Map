@@ -566,12 +566,10 @@ export default function BranchMap({
       essential: false,
     });
 
-    if (!compactViewport) {
-      popupRef.current
-        ?.setLngLat(branch.coordinates)
-        .setDOMContent(createPopupContent(branch))
-        .addTo(map);
-    }
+    popupRef.current
+      ?.setLngLat(branch.coordinates)
+      .setDOMContent(createPopupContent(branch))
+      .addTo(map);
   }, [isReady, selectedId, viewAllRequest]);
 
   return (

@@ -52,6 +52,11 @@ test("keeps the branch map and local GeoJSON data", async () => {
   assert.match(branchMap, /anchor: "bottom"/);
   assert.match(branchMap, /branch-marker-pin/);
   assert.doesNotMatch(`${branchMap}\n${globals}`, /branch-marker-label/);
+  assert.match(branchMap, /\.setDOMContent\(createPopupContent\(branch\)\)/);
+  assert.doesNotMatch(
+    branchMap,
+    /if\s*\(\s*!compactViewport\s*\)\s*\{\s*popupRef\.current/,
+  );
   assert.match(branchMap, /\/data\/branch-network\.geojson/);
   assert.match(branchMap, /OpenStreetMap contributors/);
   assert.doesNotMatch(branchMap, /tiles\.openfreemap\.org|tile\.openstreetmap\.org/);
