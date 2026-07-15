@@ -556,7 +556,7 @@ export default function BranchMap({
     }
 
     const selectionOffset: [number, number] = compactViewport
-      ? [0, 72]
+      ? [0, 85]
       : [0, 48];
 
     map.flyTo({
