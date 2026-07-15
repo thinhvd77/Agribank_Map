@@ -449,6 +449,7 @@ export default function BranchMap({
         map.on("error", handleMapError);
 
         popupRef.current = new maplibregl.Popup({
+          anchor: "bottom",
           closeButton: true,
           closeOnClick: false,
           maxWidth: "310px",
@@ -555,8 +556,8 @@ export default function BranchMap({
     }
 
     const selectionOffset: [number, number] = compactViewport
-      ? [0, -64]
-      : [0, 0];
+      ? [0, 72]
+      : [0, 48];
 
     map.flyTo({
       center: branch.coordinates,
