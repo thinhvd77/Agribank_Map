@@ -462,24 +462,16 @@ export default function BranchMap({
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
-          const label = document.createElement("span");
-          const labelName = document.createElement("strong");
-          const labelAddress = document.createElement("small");
           const pin = document.createElement("span");
           const number = document.createElement("span");
           element.type = "button";
           element.className = `branch-marker${branch.id === "hoi-so" ? " is-head-office" : ""}`;
           element.dataset.branchId = branch.id;
-          label.className = "branch-marker-label";
-          label.setAttribute("aria-hidden", "true");
-          labelName.textContent = branch.name;
-          labelAddress.textContent = branch.address;
           pin.className = "branch-marker-pin";
           number.className = "branch-marker-number";
           number.textContent = String(branch.number).padStart(2, "0");
-          label.append(labelName, labelAddress);
           pin.append(number);
-          element.append(label, pin);
+          element.append(pin);
           element.setAttribute(
             "aria-label",
             `Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch ${branch.number}: ${branch.name}, ${branch.address}`,
