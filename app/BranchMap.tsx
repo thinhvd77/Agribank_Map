@@ -456,10 +456,10 @@ export default function BranchMap({
           offset: 64,
         });
 
-        map.addControl(
-          new maplibregl.NavigationControl({ showCompass: false }),
-          "top-right",
-        );
+        // map.addControl(
+        //   new maplibregl.NavigationControl({ showCompass: false }),
+        //   "top-right",
+        // );
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
