@@ -624,9 +624,6 @@ a {
 
 .branch-marker {
   --marker-size: 54px;
-  --pin-size: 38px;
-  --pin-inset: 8px;
-  --pin-bottom: 8px;
 
   position: absolute;
   z-index: 1;
@@ -635,85 +632,59 @@ a {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--white);
   cursor: pointer;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
-  font-weight: 800;
   appearance: none;
 }
 
 .branch-marker.is-head-office {
   --marker-size: 66px;
-  --pin-size: 46px;
-  --pin-inset: 10px;
-  --pin-bottom: 10px;
 
   z-index: 2;
-  font-size: 13px;
 }
 
 .branch-marker.is-active {
   z-index: 3;
 }
 
-.branch-marker-pin {
+.branch-marker-image {
   position: absolute;
-  z-index: 1;
-  bottom: var(--pin-bottom);
-  left: var(--pin-inset);
-  display: grid;
-  width: var(--pin-size);
-  height: var(--pin-size);
-  place-items: center;
-  border: 3px solid var(--white);
-  border-radius: 50% 50% 50% 0;
-  background: var(--burgundy);
-  box-shadow: 0 9px 22px rgba(73, 25, 42, 0.32);
-  transform: rotate(-45deg);
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 7px 7px rgba(73, 25, 42, 0.32));
   transition:
-    background 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+    filter 180ms ease,
+    transform 180ms ease;
 }
 
-.branch-marker.is-head-office .branch-marker-pin {
-  border-width: 4px;
-  background: var(--burgundy-dark);
-  box-shadow:
-    0 0 0 4px rgba(217, 155, 25, 0.3),
-    0 12px 28px rgba(73, 25, 42, 0.38);
+.branch-marker[data-branch-id="nam-hoa"] .branch-marker-image {
+  /* inset: 10%; */
+  width: 90%;
+  height: 90%;
 }
 
-.branch-marker-number {
-  line-height: 1;
-  transform: rotate(45deg);
+.branch-marker[data-branch-id="binh-tay"] .branch-marker-image,
+.branch-marker[data-branch-id="chanh-hung"] .branch-marker-image,
+.branch-marker[data-branch-id="duong-ba-trac"] .branch-marker-image {
+  /* inset: 15%; */
+  width: 90%;
+  height: 90%;
 }
 
-.branch-marker:hover .branch-marker-pin,
-.branch-marker.is-active .branch-marker-pin {
-  background: var(--burgundy-dark);
-  border-color: #fff8e9;
-  box-shadow:
-    0 0 0 5px rgba(139, 30, 63, 0.2),
-    0 8px 18px rgba(20, 36, 53, 0.22);
-}
-
-.branch-marker.is-head-office:hover .branch-marker-pin,
-.branch-marker.is-head-office.is-active .branch-marker-pin {
-  box-shadow:
-    0 0 0 6px rgba(217, 155, 25, 0.36),
-    0 10px 24px rgba(20, 36, 53, 0.3);
+.branch-marker:hover .branch-marker-image,
+.branch-marker.is-active .branch-marker-image {
+  filter:
+    drop-shadow(0 0 5px rgba(255, 248, 233, 0.95))
+    drop-shadow(0 9px 9px rgba(73, 25, 42, 0.42));
+  transform: translateY(-2px) scale(1.08);
 }
 
 .branch-marker:focus-visible {
-  outline: none;
-}
-
-.branch-marker:focus-visible .branch-marker-pin {
-  box-shadow:
-    0 0 0 5px #ffd66c,
-    0 10px 24px rgba(20, 36, 53, 0.28);
+  border-radius: 12px;
+  outline: 3px solid #ffd66c;
+  outline-offset: 3px;
 }
 
 .maplibregl-popup {
@@ -1116,16 +1087,10 @@ a {
 
   .branch-marker {
     --marker-size: 58px;
-    --pin-size: 40px;
-    --pin-inset: 9px;
-    --pin-bottom: 8px;
   }
 
   .branch-marker.is-head-office {
     --marker-size: 70px;
-    --pin-size: 48px;
-    --pin-inset: 11px;
-    --pin-bottom: 10px;
   }
 
   .maplibregl-ctrl-top-right {
@@ -1226,16 +1191,10 @@ a {
 
   .branch-marker {
     --marker-size: 60px;
-    --pin-size: 42px;
-    --pin-inset: 9px;
-    --pin-bottom: 9px;
   }
 
   .branch-marker.is-head-office {
     --marker-size: 72px;
-    --pin-size: 50px;
-    --pin-inset: 11px;
-    --pin-bottom: 10px;
   }
 }
 

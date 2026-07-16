@@ -226,7 +226,7 @@ export default function Home() {
       </aside>
 
       <section id="network-map" className="map-panel" aria-label={COPY.mapLabel}>
-        <div className="map-heading">
+        {/* <div className="map-heading">
           <div>
             <p className="eyebrow">{COPY.interactiveMap}</p>
             <h2>{selectedBranch ? selectedBranch.name : COPY.allNetwork}</h2>
@@ -235,7 +235,7 @@ export default function Home() {
             <span><i aria-hidden="true" />{selectedBranch ? COPY.viewing : COPY.showing}</span>
             <small>{COPY.mapHint}</small>
           </div>
-        </div>
+        </div> */}
 
         <BranchMap
           selectedId={selectedId}
@@ -244,14 +244,14 @@ export default function Home() {
           viewAllRequest={viewAllRequest}
         />
 
-        <div className="corridor-legend" aria-label={COPY.corridors}>
+        {/* <div className="corridor-legend" aria-label={COPY.corridors}>
           <span className="legend-label">{COPY.corridorLabel}</span>
           <span>QL50</span>
           <span>{COPY.hauGiang}</span>
           <span>{COPY.phamHung}</span>
           <span>{COPY.nguyenVanLinh}</span>
           <span>{COPY.nguyenVanCuBridge}</span>
-        </div>
+        </div> */}
       </section>
     </main>
   );

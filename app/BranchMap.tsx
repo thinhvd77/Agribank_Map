@@ -119,6 +119,12 @@ const ALL_BRANCH_BOUNDS: [[number, number], [number, number]] = [
   ],
 ];
 
+function markerImageForBranch(branch: Branch) {
+  if (branch.id === "hoi-so") return "/HoiSo.png";
+  if (branch.id === "nam-hoa") return "/NamHoa.png";
+  return "/PGD.png";
+}
+
 const LOCAL_MAP_STYLE: StyleSpecification = {
   version: 8,
   sources: {
@@ -377,9 +383,9 @@ function fitAllBranches(map: MapLibreMap, duration: number) {
 
   map.fitBounds(ALL_BRANCH_BOUNDS, {
     padding: compactViewport
-      ? { top: 145, right: 28, bottom: 100, left: 28 }
-      : { top: 190, right: 130, bottom: 105, left: 130 },
-    maxZoom: 13.5,
+      ? { top: 0, right: 28, bottom: 100, left: 28 }
+      : { top: 0, right: 130, bottom: 105, left: 130 },
+    maxZoom: 18,
     duration,
     essential: false,
   });
@@ -433,7 +439,7 @@ export default function BranchMap({
           container: mapContainer,
           style: LOCAL_MAP_STYLE,
           center: [106.6607, 10.7433],
-          zoom: 12.3,
+          zoom: 13.3,
           minZoom: 10.5,
           maxZoom: 17,
           renderWorldCopies: false,
@@ -463,16 +469,16 @@ export default function BranchMap({
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
-          const pin = document.createElement("span");
-          const number = document.createElement("span");
+          const markerImage = document.createElement("img");
           element.type = "button";
           element.className = `branch-marker${branch.id === "hoi-so" ? " is-head-office" : ""}`;
           element.dataset.branchId = branch.id;
-          pin.className = "branch-marker-pin";
-          number.className = "branch-marker-number";
-          number.textContent = String(branch.number).padStart(2, "0");
-          pin.append(number);
-          element.append(pin);
+          markerImage.className = "branch-marker-image";
+          markerImage.src = markerImageForBranch(branch);
+          markerImage.alt = "";
+          markerImage.draggable = false;
+          markerImage.setAttribute("aria-hidden", "true");
+          element.append(markerImage);
           element.setAttribute(
             "aria-label",
             `Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch ${branch.number}: ${branch.name}, ${branch.address}`,
