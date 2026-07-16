@@ -50,8 +50,11 @@ test("keeps the branch map and local GeoJSON data", async () => {
   assert.match(branchMap, /02837515939/);
   assert.match(branchMap, /02839830317/);
   assert.match(branchMap, /anchor: "bottom"/);
-  assert.match(branchMap, /compactViewport\s*\? \[0, 72\]\s*:\s*\[0, 48\]/);
-  assert.match(branchMap, /branch-marker-pin/);
+  assert.match(branchMap, /branch\.id === "hoi-so"\) return "\/HoiSo\.png"/);
+  assert.match(branchMap, /branch\.id === "nam-hoa"\) return "\/NamHoa\.png"/);
+  assert.match(branchMap, /return "\/PGD\.png"/);
+  assert.match(branchMap, /markerImage\.className = "branch-marker-image"/);
+  assert.match(branchMap, /cooperativeGestures:\s*compactViewport/);
   assert.doesNotMatch(`${branchMap}\n${globals}`, /branch-marker-label/);
   assert.match(branchMap, /\.setDOMContent\(createPopupContent\(branch\)\)/);
   assert.doesNotMatch(
@@ -62,6 +65,27 @@ test("keeps the branch map and local GeoJSON data", async () => {
   assert.match(branchMap, /OpenStreetMap contributors/);
   assert.doesNotMatch(branchMap, /tiles\.openfreemap\.org|tile\.openstreetmap\.org/);
   assert.match(globals, /\.branch-marker\.is-head-office/);
+
+  const mapPosition = page.indexOf('id="network-map"');
+  const directoryPosition = page.indexOf('className="directory-panel"');
+  assert.ok(mapPosition >= 0, "page should render the network map");
+  assert.ok(directoryPosition >= 0, "page should render the branch directory");
+  assert.ok(
+    mapPosition < directoryPosition,
+    "the map should precede the directory in DOM order for mobile reading and focus order",
+  );
+
+  const branchCardClassPosition = page.indexOf("className={`branch-card");
+  const branchCardTagStart = page.lastIndexOf("<button", branchCardClassPosition);
+  const branchCardTagEnd = page.indexOf(
+    '<span className="branch-number">',
+    branchCardClassPosition,
+  );
+  assert.ok(branchCardClassPosition >= 0, "page should render branch card buttons");
+  assert.ok(branchCardTagStart >= 0 && branchCardTagEnd >= 0, "branch card button should be valid JSX");
+  const branchCardOpeningTag = page.slice(branchCardTagStart, branchCardTagEnd);
+  assert.match(branchCardOpeningTag, /aria-expanded=\{selected\}/);
+  assert.match(branchCardOpeningTag, /aria-controls=/);
 
   const network = JSON.parse(localMap);
   assert.equal(network.type, "FeatureCollection");
@@ -84,5 +108,8 @@ test("keeps the branch map and local GeoJSON data", async () => {
   }
 
   await access(new URL("../public/og.png", import.meta.url));
+  await access(new URL("../public/HoiSo.png", import.meta.url));
+  await access(new URL("../public/NamHoa.png", import.meta.url));
+  await access(new URL("../public/PGD.png", import.meta.url));
   await access(new URL("../public/data/branch-network.geojson", import.meta.url));
 });

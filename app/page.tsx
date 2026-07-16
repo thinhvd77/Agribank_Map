@@ -37,6 +37,7 @@ const COPY = {
   mobileHint: "Ch\u1ea1m m\u1ed9t th\u1ebb \u0111\u1ec3 xem v\u1ecb tr\u00ed tr\u00ean b\u1ea3n \u0111\u1ed3",
   swipe: "VU\u1ed0T",
   viewing: "\u0110ang xem v\u1ecb tr\u00ed \u0111\u00e3 ch\u1ecdn",
+  allShort: "T\u1ea5t c\u1ea3",
 };
 
 function formatPhone(phone: string) {
@@ -78,6 +79,8 @@ export default function Home() {
 
   return (
     <main className="network-app">
+      <h1 className="mobile-page-title">{COPY.brandLabel}</h1>
+
       <header className="mobile-topbar">
         <a className="mobile-brand" href="#network-map" aria-label={COPY.brandLabel}>
           <span className="brand-mark" aria-hidden="true">
@@ -92,9 +95,8 @@ export default function Home() {
           </span>
           <span>
             <strong>AGRIBANK</strong>
-            <small aria-live="polite">
-              {/* {selectedBranch ? selectedBranch.name : COPY.fiveLocations} */}
-              Chi nhánh Bắc Tp. HCM
+            <small role="status" aria-live="polite" aria-atomic="true">
+              {selectedBranch ? selectedBranch.name : COPY.fiveLocations}
             </small>
           </span>
         </a>
@@ -106,9 +108,38 @@ export default function Home() {
           aria-pressed={selectedId === "all"}
         >
           <strong>05</strong>
-          <small>{COPY.fivePoints}</small>
+          <small>{COPY.allShort}</small>
         </button>
       </header>
+
+      <section id="network-map" className="map-panel" aria-label={COPY.mapLabel}>
+        {/* <div className="map-heading">
+          <div>
+            <p className="eyebrow">{COPY.interactiveMap}</p>
+            <h2>{selectedBranch ? selectedBranch.name : COPY.allNetwork}</h2>
+          </div>
+          <div className="map-status">
+            <span><i aria-hidden="true" />{selectedBranch ? COPY.viewing : COPY.showing}</span>
+            <small>{COPY.mapHint}</small>
+          </div>
+        </div> */}
+
+        <BranchMap
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          onViewAll={showAllBranches}
+          viewAllRequest={viewAllRequest}
+        />
+
+        {/* <div className="corridor-legend" aria-label={COPY.corridors}>
+          <span className="legend-label">{COPY.corridorLabel}</span>
+          <span>QL50</span>
+          <span>{COPY.hauGiang}</span>
+          <span>{COPY.phamHung}</span>
+          <span>{COPY.nguyenVanLinh}</span>
+          <span>{COPY.nguyenVanCuBridge}</span>
+        </div> */}
+      </section>
 
       <aside className="directory-panel" aria-label={COPY.directory}>
         <header className="brand-header">
@@ -167,6 +198,7 @@ export default function Home() {
           <ol className="branch-list" ref={branchListRef}>
             {BRANCHES.map((branch) => {
               const selected = branch.id === selectedId;
+              const detailsId = `branch-details-${branch.id}`;
               return (
                 <li
                   key={branch.id}
@@ -180,6 +212,8 @@ export default function Home() {
                     type="button"
                     onClick={() => setSelectedId(branch.id)}
                     aria-pressed={selected}
+                    aria-expanded={selected}
+                    aria-controls={detailsId}
                   >
                     <span className="branch-number">{String(branch.number).padStart(2, "0")}</span>
                     <span className="branch-card-copy">
@@ -190,29 +224,34 @@ export default function Home() {
                     <span className="card-arrow" aria-hidden="true">&rsaquo;</span>
                   </button>
 
-                  {selected && (
-                    <div className="branch-details" aria-live="polite">
-                      <p><span aria-hidden="true">+</span>{branch.address}</p>
-                      <div className="detail-actions">
-                        <a
-                          className="call-link"
-                          href={`tel:+84${branch.phone.slice(1)}`}
-                          aria-label={`G\u1ecdi ${branch.name}: ${formatPhone(branch.phone)}`}
-                        >
-                          <span aria-hidden="true">TEL</span>{formatPhone(branch.phone)}
-                        </a>
-                        <a
-                          className="direction-link"
-                          href={branch.directionsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${COPY.direction} \u0111\u1ebfn ${branch.name} - m\u1edf trong th\u1ebb m\u1edbi`}
-                        >
-                          {COPY.direction} <span aria-hidden="true">{"\u2197"}</span>
-                        </a>
-                      </div>
+                  <div
+                    id={detailsId}
+                    className="branch-details"
+                    role="region"
+                    aria-label={`Chi ti\u1ebft ${branch.name}`}
+                    aria-live="polite"
+                    hidden={!selected}
+                  >
+                    <p><span aria-hidden="true">+</span>{branch.address}</p>
+                    <div className="detail-actions">
+                      <a
+                        className="call-link"
+                        href={`tel:+84${branch.phone.slice(1)}`}
+                        aria-label={`G\u1ecdi ${branch.name}: ${formatPhone(branch.phone)}`}
+                      >
+                        <span aria-hidden="true">G\u1eccI</span>{formatPhone(branch.phone)}
+                      </a>
+                      <a
+                        className="direction-link"
+                        href={branch.directionsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${COPY.direction} \u0111\u1ebfn ${branch.name} - m\u1edf trong th\u1ebb m\u1edbi`}
+                      >
+                        {COPY.direction} <span aria-hidden="true">{"\u2197"}</span>
+                      </a>
                     </div>
-                  )}
+                  </div>
                 </li>
               );
             })}
@@ -224,35 +263,6 @@ export default function Home() {
           <span>{COPY.cityYear}</span>
         </footer>
       </aside>
-
-      <section id="network-map" className="map-panel" aria-label={COPY.mapLabel}>
-        {/* <div className="map-heading">
-          <div>
-            <p className="eyebrow">{COPY.interactiveMap}</p>
-            <h2>{selectedBranch ? selectedBranch.name : COPY.allNetwork}</h2>
-          </div>
-          <div className="map-status">
-            <span><i aria-hidden="true" />{selectedBranch ? COPY.viewing : COPY.showing}</span>
-            <small>{COPY.mapHint}</small>
-          </div>
-        </div> */}
-
-        <BranchMap
-          selectedId={selectedId}
-          onSelect={setSelectedId}
-          onViewAll={showAllBranches}
-          viewAllRequest={viewAllRequest}
-        />
-
-        {/* <div className="corridor-legend" aria-label={COPY.corridors}>
-          <span className="legend-label">{COPY.corridorLabel}</span>
-          <span>QL50</span>
-          <span>{COPY.hauGiang}</span>
-          <span>{COPY.phamHung}</span>
-          <span>{COPY.nguyenVanLinh}</span>
-          <span>{COPY.nguyenVanCuBridge}</span>
-        </div> */}
-      </section>
     </main>
   );
 }

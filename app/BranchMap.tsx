@@ -378,12 +378,25 @@ function createPopupContent(branch: Branch) {
   return content;
 }
 
+function showBranchPopup(
+  popup: MapLibrePopup,
+  map: MapLibreMap,
+  branch: Branch,
+  compactViewport: boolean,
+) {
+  popup
+    .setOffset(compactViewport ? (branch.id === "hoi-so" ? 78 : 68) : 64)
+    .setLngLat(branch.coordinates)
+    .setDOMContent(createPopupContent(branch))
+    .addTo(map);
+}
+
 function fitAllBranches(map: MapLibreMap, duration: number) {
   const compactViewport = window.matchMedia("(max-width: 900px)").matches;
 
   map.fitBounds(ALL_BRANCH_BOUNDS, {
     padding: compactViewport
-      ? { top: 0, right: 28, bottom: 100, left: 28 }
+      ? { top: 52, right: 40, bottom: 88, left: 40 }
       : { top: 0, right: 130, bottom: 105, left: 130 },
     maxZoom: 18,
     duration,
@@ -432,6 +445,7 @@ export default function BranchMap({
       try {
         const maplibregl = await import("maplibre-gl");
         if (cancelled) return;
+        const compactViewport = window.matchMedia("(max-width: 900px)").matches;
 
         setMapError(false);
 
@@ -443,7 +457,19 @@ export default function BranchMap({
           minZoom: 10.5,
           maxZoom: 17,
           renderWorldCopies: false,
+          cooperativeGestures: compactViewport,
+          dragRotate: false,
+          touchPitch: false,
+          locale: {
+            "Map.Title": "B\u1ea3n \u0111\u1ed3 v\u1ecb tr\u00ed \u0111i\u1ec3m giao d\u1ecbch",
+            "NavigationControl.ZoomIn": "Ph\u00f3ng to",
+            "NavigationControl.ZoomOut": "Thu nh\u1ecf",
+            "Popup.Close": "\u0110\u00f3ng",
+            "CooperativeGesturesHandler.MobileHelpText":
+              "D\u00f9ng hai ng\u00f3n tay \u0111\u1ec3 di chuy\u1ec3n b\u1ea3n \u0111\u1ed3",
+          },
         });
+        map.touchZoomRotate.disableRotation();
         mapRef.current = map;
 
         handleMapError = (event) => {
@@ -458,14 +484,16 @@ export default function BranchMap({
           anchor: "bottom",
           closeButton: true,
           closeOnClick: false,
-          maxWidth: "310px",
+          maxWidth: "326px",
           offset: 64,
         });
 
-        // map.addControl(
-        //   new maplibregl.NavigationControl({ showCompass: false }),
-        //   "top-right",
-        // );
+        if (compactViewport) {
+          map.addControl(
+            new maplibregl.NavigationControl({ showCompass: false }),
+            "top-right",
+          );
+        }
 
         BRANCHES.forEach((branch) => {
           const element = document.createElement("button");
@@ -473,6 +501,7 @@ export default function BranchMap({
           element.type = "button";
           element.className = `branch-marker${branch.id === "hoi-so" ? " is-head-office" : ""}`;
           element.dataset.branchId = branch.id;
+          element.dataset.number = String(branch.number).padStart(2, "0");
           markerImage.className = "branch-marker-image";
           markerImage.src = markerImageForBranch(branch);
           markerImage.alt = "";
@@ -487,6 +516,14 @@ export default function BranchMap({
 
           const handleClick = (event: MouseEvent) => {
             event.stopPropagation();
+            if (selectedIdRef.current === branch.id && popupRef.current) {
+              showBranchPopup(
+                popupRef.current,
+                map as MapLibreMap,
+                branch,
+                compactViewport,
+              );
+            }
             onSelectRef.current(branch.id);
           };
           element.addEventListener("click", handleClick);
@@ -546,7 +583,7 @@ export default function BranchMap({
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const cameraDuration = prefersReducedMotion ? 0 : 900;
+    const cameraDuration = prefersReducedMotion ? 0 : compactViewport ? 550 : 900;
 
     markersRef.current.forEach(({ element }, branchId) => {
       const active = branchId === selectedId;
@@ -561,8 +598,12 @@ export default function BranchMap({
       return;
     }
 
+    const mobileOffset = Math.min(
+      85,
+      Math.max(64, Math.round(map.getContainer().clientHeight * 0.18)),
+    );
     const selectionOffset: [number, number] = compactViewport
-      ? [0, 85]
+      ? [0, mobileOffset]
       : [0, 48];
 
     map.flyTo({
@@ -573,20 +614,23 @@ export default function BranchMap({
       essential: false,
     });
 
-    popupRef.current
-      ?.setLngLat(branch.coordinates)
-      .setDOMContent(createPopupContent(branch))
-      .addTo(map);
+    if (popupRef.current) {
+      showBranchPopup(popupRef.current, map, branch, compactViewport);
+    }
   }, [isReady, selectedId, viewAllRequest]);
 
   return (
-    <div className="map-shell">
+    <div className="map-shell" aria-busy={!isReady && !mapError}>
       <div
         ref={mapContainerRef}
         className="map-canvas"
-        role="region"
-        aria-label={"B\u1ea3n \u0111\u1ed3 v\u1ecb tr\u00ed n\u0103m \u0111i\u1ec3m giao d\u1ecbch Agribank"}
       />
+
+      {!isReady && !mapError && (
+        <div className="map-loading-status" role="status">
+          {"\u0110ang t\u1ea3i b\u1ea3n \u0111\u1ed3\u2026"}
+        </div>
+      )}
 
       {mapError && (
         <div className="map-error" role="alert">
@@ -606,7 +650,7 @@ export default function BranchMap({
           aria-pressed={selectedId === "all"}
           onClick={onViewAll}
         >
-          {"Xem to\u00e0n b\u1ed9"}
+          {selectedId === "all" ? "\u0110\u1eb7t l\u1ea1i b\u1ea3n \u0111\u1ed3" : "Xem 5 \u0111i\u1ec3m"}
         </button>
       </div>
     </div>
