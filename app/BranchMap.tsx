@@ -385,7 +385,7 @@ function showBranchPopup(
   compactViewport: boolean,
 ) {
   popup
-    .setOffset(compactViewport ? (branch.id === "hoi-so" ? 78 : 68) : 64)
+    .setOffset(compactViewport ? (branch.id === "hoi-so" ? 64 : 56) : 64)
     .setLngLat(branch.coordinates)
     .setDOMContent(createPopupContent(branch))
     .addTo(map);
@@ -491,7 +491,7 @@ export default function BranchMap({
         if (compactViewport) {
           map.addControl(
             new maplibregl.NavigationControl({ showCompass: false }),
-            "top-right",
+            "bottom-left",
           );
         }
 
@@ -599,8 +599,8 @@ export default function BranchMap({
     }
 
     const mobileOffset = Math.min(
-      85,
-      Math.max(64, Math.round(map.getContainer().clientHeight * 0.18)),
+      110,
+      Math.max(88, Math.round(map.getContainer().clientHeight * 0.28)),
     );
     const selectionOffset: [number, number] = compactViewport
       ? [0, mobileOffset]
@@ -608,7 +608,7 @@ export default function BranchMap({
 
     map.flyTo({
       center: branch.coordinates,
-      zoom: compactViewport ? 15.2 : 15.8,
+      zoom: compactViewport ? 14.4 : 15.8,
       offset: selectionOffset,
       duration: cameraDuration,
       essential: false,

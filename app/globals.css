@@ -1248,12 +1248,12 @@ a {
   }
 
   .branch-popup small {
-    padding-right: 28px;
+    padding-right: 48px;
     font-size: 10px;
   }
 
   .branch-popup strong {
-    padding-right: 28px;
+    padding-right: 48px;
     font-size: 19px;
     line-height: 1.2;
   }
@@ -1285,9 +1285,9 @@ a {
     background: var(--burgundy-soft);
   }
 
-  .maplibregl-ctrl-top-right {
-    top: 12px !important;
-    right: 8px !important;
+  .maplibregl-ctrl-bottom-left {
+    bottom: max(42px, env(safe-area-inset-bottom)) !important;
+    left: env(safe-area-inset-left) !important;
   }
 
   .maplibregl-ctrl-group button {
@@ -1346,9 +1346,22 @@ a {
     border-radius: 13px;
   }
 
-  .maplibregl-ctrl-top-right {
-    top: 12px !important;
-    right: 8px !important;
+  .maplibregl-ctrl-bottom-left {
+    bottom: max(42px, env(safe-area-inset-bottom)) !important;
+    left: env(safe-area-inset-left) !important;
+  }
+
+  .branch-popup {
+    padding: 14px;
+  }
+
+  .branch-popup > span {
+    display: none;
+  }
+
+  .branch-popup-actions {
+    margin-top: 10px;
+    padding-top: 10px;
   }
 
   .maplibregl-ctrl-attrib {
