@@ -31,65 +31,65 @@ export const BRANCHES: readonly Branch[] = [
     name: "Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh",
     type: "HỘI SỞ",
     address:
-      "925 - 925 (ABCD), T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng",
+      "925 - 925 (ABCD), Tạ Quang Bửu, Phường Bình Đông",
     phone: "02837515939",
-    connection: "T\u1ea1 Quang B\u1eedu \u00b7 QL50",
+    connection: "Tạ Quang Bửu · QL50",
     coordinates: [106.6585755, 10.7339522],
     directionsUrl: directionsUrl(
-      "925 T\u1ea1 Quang B\u1eedu, Ph\u01b0\u1eddng B\u00ecnh \u0110\u00f4ng",
+      "925 Tạ Quang Bửu, Phường Bình Đông",
     ),
   },
   {
     id: "nam-hoa",
     number: 2,
-    name: "Chi nh\u00e1nh Nam Hoa",
-    type: "CHI NH\u00c1NH",
-    address: "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y",
+    name: "Chi nhánh Nam Hoa",
+    type: "CHI NHÁNH",
+    address: "241 Hậu Giang, Phường Bình Tây",
     phone: "02839607865",
-    connection: "H\u1eadu Giang \u00b7 Minh Ph\u1ee5ng",
+    connection: "Hậu Giang · Minh Phụng",
     coordinates: [106.6439967, 10.7495461],
     directionsUrl: directionsUrl(
-      "241 H\u1eadu Giang, Ph\u01b0\u1eddng B\u00ecnh T\u00e2y",
+      "241 Hậu Giang, Phường Bình Tây",
     ),
   },
   {
     id: "binh-tay",
     number: 3,
-    name: "PGD B\u00ecnh T\u00e2y",
-    type: "PH\u00d2NG GIAO D\u1ecaCH",
-    address: "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa",
+    name: "PGD Bình Tây",
+    type: "PHÒNG GIAO DỊCH",
+    address: "61 Chợ Lớn, Phường Bình Phú",
     phone: "02837554673",
-    connection: "Ch\u1ee3 L\u1edbn \u00b7 H\u1eadu Giang",
+    connection: "Chợ Lớn · Hậu Giang",
     coordinates: [106.6326919, 10.7458739],
     directionsUrl: directionsUrl(
-      "61 Ch\u1ee3 L\u1edbn, Ph\u01b0\u1eddng B\u00ecnh Ph\u00fa",
+      "61 Chợ Lớn, Phường Bình Phú",
     ),
   },
   {
     id: "chanh-hung",
     number: 4,
-    name: "PGD Ch\u00e1nh H\u01b0ng",
-    type: "PH\u00d2NG GIAO D\u1ecaCH",
+    name: "PGD Chánh Hưng",
+    type: "PHÒNG GIAO DỊCH",
     address:
-      "329 Ph\u1ea1m H\u00f9ng, KDC Him Lam, \u1ea4p 4A, X\u00e3 B\u00ecnh H\u01b0ng",
+      "329 Phạm Hùng, KDC Him Lam, Ấp 4A, Xã Bình Hưng",
     phone: "02837583488",
-    connection: "Ph\u1ea1m H\u00f9ng \u00b7 Nguy\u1ec5n V\u0103n Linh",
+    connection: "Phạm Hùng · Nguyễn Văn Linh",
     coordinates: [106.6729081, 10.7350739],
     directionsUrl: directionsUrl(
-      "329 Ph\u1ea1m H\u00f9ng, X\u00e3 B\u00ecnh H\u01b0ng",
+      "329 Phạm Hùng, Xã Bình Hưng",
     ),
   },
   {
     id: "duong-ba-trac",
     number: 5,
-    name: "PGD D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c",
-    type: "PH\u00d2NG GIAO D\u1ecaCH",
-    address: "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng",
+    name: "PGD Dương Bá Trạc",
+    type: "PHÒNG GIAO DỊCH",
+    address: "124 Dương Bá Trạc, Phường Chánh Hưng",
     phone: "02839830317",
-    connection: "D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c \u00b7 C\u1ea7u Nguy\u1ec5n V\u0103n C\u1eeb",
+    connection: "Dương Bá Trạc · Cầu Nguyễn Văn Cừ",
     coordinates: [106.6884174, 10.7480873],
     directionsUrl: directionsUrl(
-      "124 D\u01b0\u01a1ng B\u00e1 Tr\u1ea1c, Ph\u01b0\u1eddng Ch\u00e1nh H\u01b0ng",
+      "124 Dương Bá Trạc, Phường Chánh Hưng",
     ),
     approximate: true,
   },
@@ -132,7 +132,7 @@ const LOCAL_MAP_STYLE: StyleSpecification = {
       type: "geojson",
       data: "/data/branch-network.geojson",
       attribution:
-        '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">\u00a9 OpenStreetMap contributors</a>',
+        '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>',
       maxzoom: 17,
     },
   },
@@ -347,7 +347,7 @@ function createPopupContent(branch: Branch) {
   content.className = "branch-popup";
 
   const type = document.createElement("small");
-  type.textContent = `${branch.type} \u00b7 ${String(branch.number).padStart(2, "0")}`;
+  type.textContent = `${branch.type} · ${String(branch.number).padStart(2, "0")}`;
 
   const title = document.createElement("strong");
   title.textContent = branch.name;
@@ -361,16 +361,16 @@ function createPopupContent(branch: Branch) {
   const phone = document.createElement("a");
   phone.href = `tel:+84${branch.phone.slice(1)}`;
   phone.textContent = formatPhone(branch.phone);
-  phone.setAttribute("aria-label", `G\u1ecdi ${branch.name}: ${formatPhone(branch.phone)}`);
+  phone.setAttribute("aria-label", `Gọi ${branch.name}: ${formatPhone(branch.phone)}`);
 
   const directions = document.createElement("a");
   directions.href = branch.directionsUrl;
   directions.target = "_blank";
   directions.rel = "noopener noreferrer";
-  directions.textContent = "Ch\u1ec9 \u0111\u01b0\u1eddng \u2197";
+  directions.textContent = "Chỉ đường ↗";
   directions.setAttribute(
     "aria-label",
-    `Ch\u1ec9 \u0111\u01b0\u1eddng \u0111\u1ebfn ${branch.name} - m\u1edf trong th\u1ebb m\u1edbi`,
+    `Chỉ đường đến ${branch.name} - mở trong thẻ mới`,
   );
 
   actions.append(phone, directions);
@@ -461,12 +461,12 @@ export default function BranchMap({
           dragRotate: false,
           touchPitch: false,
           locale: {
-            "Map.Title": "B\u1ea3n \u0111\u1ed3 v\u1ecb tr\u00ed \u0111i\u1ec3m giao d\u1ecbch",
-            "NavigationControl.ZoomIn": "Ph\u00f3ng to",
-            "NavigationControl.ZoomOut": "Thu nh\u1ecf",
-            "Popup.Close": "\u0110\u00f3ng",
+            "Map.Title": "Bản đồ vị trí điểm giao dịch",
+            "NavigationControl.ZoomIn": "Phóng to",
+            "NavigationControl.ZoomOut": "Thu nhỏ",
+            "Popup.Close": "Đóng",
             "CooperativeGesturesHandler.MobileHelpText":
-              "D\u00f9ng hai ng\u00f3n tay \u0111\u1ec3 di chuy\u1ec3n b\u1ea3n \u0111\u1ed3",
+              "Dùng hai ngón tay để di chuyển bản đồ",
           },
         });
         map.touchZoomRotate.disableRotation();
@@ -510,7 +510,7 @@ export default function BranchMap({
           element.append(markerImage);
           element.setAttribute(
             "aria-label",
-            `Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch ${branch.number}: ${branch.name}, ${branch.address}`,
+            `Chọn điểm giao dịch ${branch.number}: ${branch.name}, ${branch.address}`,
           );
           element.setAttribute("aria-pressed", "false");
 
@@ -628,21 +628,21 @@ export default function BranchMap({
 
       {!isReady && !mapError && (
         <div className="map-loading-status" role="status">
-          {"\u0110ang t\u1ea3i b\u1ea3n \u0111\u1ed3\u2026"}
+          {"Đang tải bản đồ…"}
         </div>
       )}
 
       {mapError && (
         <div className="map-error" role="alert">
-          <strong>{"Kh\u00f4ng th\u1ec3 t\u1ea3i d\u1eef li\u1ec7u b\u1ea3n \u0111\u1ed3"}</strong>
-          <small>{"Vui l\u00f2ng t\u1ea3i l\u1ea1i trang ho\u1eb7c li\u00ean h\u1ec7 qu\u1ea3n tr\u1ecb n\u1ebfu l\u1ed7i ti\u1ebfp di\u1ec5n."}</small>
+          <strong>{"Không thể tải dữ liệu bản đồ"}</strong>
+          <small>{"Vui lòng tải lại trang hoặc liên hệ quản trị nếu lỗi tiếp diễn."}</small>
         </div>
       )}
 
       <div
         className="map-actions"
         role="group"
-        aria-label={"\u0110i\u1ec1u khi\u1ec3n b\u1ea3n \u0111\u1ed3"}
+        aria-label={"Điều khiển bản đồ"}
       >
         <button
           type="button"
@@ -650,7 +650,7 @@ export default function BranchMap({
           aria-pressed={selectedId === "all"}
           onClick={onViewAll}
         >
-          {selectedId === "all" ? "\u0110\u1eb7t l\u1ea1i b\u1ea3n \u0111\u1ed3" : "Xem 5 \u0111i\u1ec3m"}
+          {selectedId === "all" ? "Đặt lại bản đồ" : "Xem 5 điểm"}
         </button>
       </div>
     </div>

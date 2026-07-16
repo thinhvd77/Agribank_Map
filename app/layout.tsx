@@ -15,17 +15,17 @@ const geistMono = Geist_Mono({
 
 const metadataCopy = {
   title:
-    "M\u1ea1ng l\u01b0\u1edbi \u0111i\u1ec3m giao d\u1ecbch | Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh",
+    "Mạng lưới điểm giao dịch | Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh",
   description:
-    "B\u1ea3n \u0111\u1ed3 t\u01b0\u01a1ng t\u00e1c 5 \u0111i\u1ec3m giao d\u1ecbch Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh.",
-  applicationName: "B\u1ea3n \u0111\u1ed3 m\u1ea1ng l\u01b0\u1edbi Agribank",
+    "Bản đồ tương tác 5 điểm giao dịch Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh.",
+  applicationName: "Bản đồ mạng lưới Agribank",
 };
 
 const metadataBase = new URL(process.env.SITE_URL ?? "http://localhost:3000");
 const socialTitle =
-  "M\u1ea1ng l\u01b0\u1edbi \u0111i\u1ec3m giao d\u1ecbch Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh";
+  "Mạng lưới điểm giao dịch Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh";
 const socialDescription =
-  "Kh\u00e1m ph\u00e1 v\u1ecb tr\u00ed v\u00e0 c\u00e1c tr\u1ee5c k\u1ebft n\u1ed1i ch\u00ednh c\u1ee7a 5 \u0111i\u1ec3m giao d\u1ecbch t\u1ea1i TP. H\u1ed3 Ch\u00ed Minh.";
+  "Khám phá vị trí và các trục kết nối chính của 5 điểm giao dịch tại TP. Hồ Chí Minh.";
 
 export const metadata: Metadata = {
   ...metadataCopy,

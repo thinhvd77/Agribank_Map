@@ -11,7 +11,7 @@ const BOUNDS = {
 
 const bbox = `${BOUNDS.south},${BOUNDS.west},${BOUNDS.north},${BOUNDS.east}`;
 const corridorNames =
-  "^(\u0110ường |Cầu |Đại lộ )?(Tạ Quang Bửu|Hậu Giang|Minh Phụng|Chợ Lớn|Phạm Hùng|Nguyễn Văn Linh|Dương Bá Trạc|Nguyễn Văn Cừ|Quốc lộ 50)$";
+  "^(Đường |Cầu |Đại lộ )?(Tạ Quang Bửu|Hậu Giang|Minh Phụng|Chợ Lớn|Phạm Hùng|Nguyễn Văn Linh|Dương Bá Trạc|Nguyễn Văn Cừ|Quốc lộ 50)$";
 const canonicalCorridors = new Set([
   "Tạ Quang Bửu",
   "Hậu Giang",

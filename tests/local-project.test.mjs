@@ -45,7 +45,7 @@ test("keeps the branch map and local GeoJSON data", async () => {
 
   assert.match(
     `${page}\n${layout}\n${branchMap}`,
-    /Agribank Chi nh\\u00e1nh B\\u1eafc Th\\u00e0nh ph\\u1ed1 H\\u1ed3 Ch\\u00ed Minh/,
+    /Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh/,
   );
   assert.match(branchMap, /02837515939/);
   assert.match(branchMap, /02839830317/);

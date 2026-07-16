@@ -5,39 +5,39 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import BranchMap, { BRANCHES } from "./BranchMap";
 
 const COPY = {
-  directory: "Danh b\u1ea1 \u0111i\u1ec3m giao d\u1ecbch",
-  brandLabel: "Agribank Chi nh\u00e1nh B\u1eafc Th\u00e0nh ph\u1ed1 H\u1ed3 Ch\u00ed Minh",
-  branchLabel: "CHI NH\u00c1NH B\u1eaeC TP. H\u1ed2 CH\u00cd MINH",
-  networkMap: "B\u1ea2N \u0110\u1ed2 M\u1ea0NG L\u01af\u1edaI",
-  region: "KHU V\u1ef0C TP. H\u1ed2 CH\u00cd MINH",
-  network: "M\u1ea1ng l\u01b0\u1edbi",
-  transactions: "\u0111i\u1ec3m giao d\u1ecbch",
+  directory: "Danh bạ điểm giao dịch",
+  brandLabel: "Agribank Chi nhánh Bắc Thành phố Hồ Chí Minh",
+  branchLabel: "CHI NHÁNH BẮC TP. HỒ CHÍ MINH",
+  networkMap: "BẢN ĐỒ MẠNG LƯỚI",
+  region: "KHU VỰC TP. HỒ CHÍ MINH",
+  network: "Mạng lưới",
+  transactions: "điểm giao dịch",
   intro:
-    "5 \u0111i\u1ec3m k\u1ebft n\u1ed1i thu\u1eadn ti\u1ec7n qua c\u00e1c tr\u1ee5c \u0111\u01b0\u1eddng ch\u00ednh ph\u00eda T\u00e2y v\u00e0 Nam th\u00e0nh ph\u1ed1.",
-  overview: "T\u1ed5ng quan m\u1ea1ng l\u01b0\u1edbi",
-  fivePoints: "\u0111i\u1ec3m giao d\u1ecbch",
-  nineRoads: "tr\u1ee5c k\u1ebft n\u1ed1i",
-  select: "Ch\u1ecdn \u0111i\u1ec3m giao d\u1ecbch",
-  viewAll: "Xem to\u00e0n b\u1ed9 5 \u0111i\u1ec3m",
-  mapOverview: "T\u1ed5ng quan tr\u00ean b\u1ea3n \u0111\u1ed3",
-  mapLabel: "B\u1ea3n \u0111\u1ed3 m\u1ea1ng l\u01b0\u1edbi \u0111i\u1ec3m giao d\u1ecbch",
-  interactiveMap: "B\u1ea2N \u0110\u1ed2 T\u01af\u01a0NG T\u00c1C",
-  allNetwork: "To\u00e0n b\u1ed9 m\u1ea1ng l\u01b0\u1edbi",
-  showing: "5 \u0111i\u1ec3m \u0111ang hi\u1ec3n th\u1ecb",
-  mapHint: "Nh\u1ea5n v\u00e0o \u0111i\u1ec3m \u0111\u00e1nh d\u1ea5u \u0111\u1ec3 xem chi ti\u1ebft",
-  corridors: "C\u00c1C TR\u1ee4C K\u1ebeT N\u1ed0I CH\u00cdNH",
-  corridorLabel: "TR\u1ee4C K\u1ebeT N\u1ed0I",
-  hauGiang: "H\u1eadu Giang",
-  phamHung: "Ph\u1ea1m H\u00f9ng",
-  nguyenVanLinh: "Nguy\u1ec5n V\u0103n Linh",
-  nguyenVanCuBridge: "C\u1ea7u Nguy\u1ec5n V\u0103n C\u1eeb",
-  direction: "Ch\u1ec9 \u0111\u01b0\u1eddng",
-  cityYear: "TP. H\u1ed2 CH\u00cd MINH - 2026",
-  fiveLocations: "05 \u0111i\u1ec3m giao d\u1ecbch",
-  mobileHint: "Ch\u1ea1m m\u1ed9t th\u1ebb \u0111\u1ec3 xem v\u1ecb tr\u00ed tr\u00ean b\u1ea3n \u0111\u1ed3",
-  swipe: "VU\u1ed0T",
-  viewing: "\u0110ang xem v\u1ecb tr\u00ed \u0111\u00e3 ch\u1ecdn",
-  allShort: "T\u1ea5t c\u1ea3",
+    "5 điểm kết nối thuận tiện qua các trục đường chính phía Tây và Nam thành phố.",
+  overview: "Tổng quan mạng lưới",
+  fivePoints: "điểm giao dịch",
+  nineRoads: "trục kết nối",
+  select: "Chọn điểm giao dịch",
+  viewAll: "Xem toàn bộ 5 điểm",
+  mapOverview: "Tổng quan trên bản đồ",
+  mapLabel: "Bản đồ mạng lưới điểm giao dịch",
+  interactiveMap: "BẢN ĐỒ TƯƠNG TÁC",
+  allNetwork: "Toàn bộ mạng lưới",
+  showing: "5 điểm đang hiển thị",
+  mapHint: "Nhấn vào điểm đánh dấu để xem chi tiết",
+  corridors: "CÁC TRỤC KẾT NỐI CHÍNH",
+  corridorLabel: "TRỤC KẾT NỐI",
+  hauGiang: "Hậu Giang",
+  phamHung: "Phạm Hùng",
+  nguyenVanLinh: "Nguyễn Văn Linh",
+  nguyenVanCuBridge: "Cầu Nguyễn Văn Cừ",
+  direction: "Chỉ đường",
+  cityYear: "TP. HỒ CHÍ MINH - 2026",
+  fiveLocations: "05 điểm giao dịch",
+  mobileHint: "Chạm một thẻ để xem vị trí trên bản đồ",
+  swipe: "VUỐT",
+  viewing: "Đang xem vị trí đã chọn",
+  allShort: "Tất cả",
 };
 
 function formatPhone(phone: string) {
@@ -178,7 +178,7 @@ export default function Home() {
               <strong>{COPY.select}</strong>
               <small>{COPY.mobileHint}</small>
             </div>
-            <span aria-hidden="true">{COPY.swipe} {"\u2192"}</span>
+            <span aria-hidden="true">{COPY.swipe} {"→"}</span>
           </div>
 
           <button
@@ -192,7 +192,7 @@ export default function Home() {
               <strong>{COPY.viewAll}</strong>
               <small>{COPY.mapOverview}</small>
             </span>
-            <span className="card-arrow" aria-hidden="true">{"\u2197"}</span>
+            <span className="card-arrow" aria-hidden="true">{"↗"}</span>
           </button>
 
           <ol className="branch-list" ref={branchListRef}>
@@ -228,7 +228,7 @@ export default function Home() {
                     id={detailsId}
                     className="branch-details"
                     role="region"
-                    aria-label={`Chi ti\u1ebft ${branch.name}`}
+                    aria-label={`Chi tiết ${branch.name}`}
                     aria-live="polite"
                     hidden={!selected}
                   >
@@ -239,16 +239,16 @@ export default function Home() {
                         href={`tel:+84${branch.phone.slice(1)}`}
                         aria-label={`Gọi ${branch.name}: ${formatPhone(branch.phone)}`}
                       >
-                        <span aria-hidden="true">G\u1eccI</span>{formatPhone(branch.phone)}
+                        <span aria-hidden="true">GỌI</span>{formatPhone(branch.phone)}
                       </a>
                       <a
                         className="direction-link"
                         href={branch.directionsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${COPY.direction} \u0111\u1ebfn ${branch.name} - m\u1edf trong th\u1ebb m\u1edbi`}
+                        aria-label={`${COPY.direction} đến ${branch.name} - mở trong thẻ mới`}
                       >
-                        {COPY.direction} <span aria-hidden="true">{"\u2197"}</span>
+                        {COPY.direction} <span aria-hidden="true">{"↗"}</span>
                       </a>
                     </div>
                   </div>
