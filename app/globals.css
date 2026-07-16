@@ -27,7 +27,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: var(--font-geist-sans), "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -129,7 +129,7 @@ a {
 .brand-lockup small {
   margin-top: 5px;
   color: var(--ink-soft);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 9px;
   font-weight: 650;
   letter-spacing: 0.18em;
@@ -140,7 +140,7 @@ a {
   align-items: center;
   gap: 7px;
   color: var(--ink-soft);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 8px;
   font-weight: 650;
   letter-spacing: 0.13em;
@@ -163,7 +163,7 @@ a {
 .eyebrow {
   margin: 0 0 14px;
   color: var(--burgundy);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 10px;
   font-weight: 720;
   letter-spacing: 0.18em;
@@ -173,7 +173,7 @@ a {
   max-width: 450px;
   margin: 0;
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: clamp(42px, 4.3vw, 67px);
   font-weight: 500;
   letter-spacing: -0.047em;
@@ -206,7 +206,7 @@ a {
 
 .summary-row b {
   color: var(--burgundy);
-  font-family: Georgia, serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 24px;
   font-weight: 600;
 }
@@ -309,7 +309,7 @@ a {
   border-radius: 50%;
   border: 1px solid rgba(139, 30, 63, 0.24);
   color: var(--burgundy);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 10px;
   font-weight: 700;
 }
@@ -331,7 +331,7 @@ a {
 .branch-card-copy small {
   margin-bottom: 3px;
   color: var(--burgundy);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 8px;
   font-weight: 720;
   letter-spacing: 0.12em;
@@ -437,7 +437,7 @@ a {
   padding: 18px clamp(26px, 3vw, 46px) 22px;
   border-top: 1px solid var(--line);
   color: var(--ink-soft);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 7px;
   letter-spacing: 0.1em;
 }
@@ -479,7 +479,7 @@ a {
 
 .map-heading h2 {
   margin: 0;
-  font-family: Georgia, serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: clamp(20px, 2.3vw, 32px);
   font-weight: 500;
   letter-spacing: -0.035em;
@@ -591,7 +591,7 @@ a {
 
 .map-error strong {
   color: var(--burgundy);
-  font-family: Georgia, serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 21px;
 }
 
@@ -638,7 +638,7 @@ a {
 .corridor-legend .legend-label {
   background: var(--burgundy);
   color: var(--white);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 7px;
   letter-spacing: 0.11em;
 }
@@ -683,7 +683,7 @@ a {
   box-shadow: 0 4px 12px rgba(20, 36, 53, 0.24);
   color: var(--white);
   content: attr(data-number);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 8px;
   font-weight: 800;
   line-height: 1;
@@ -800,7 +800,7 @@ a {
 .branch-popup small {
   margin-bottom: 5px;
   color: var(--burgundy);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.11em;
@@ -809,7 +809,7 @@ a {
 .branch-popup strong {
   padding-right: 22px;
   color: var(--ink);
-  font-family: Georgia, serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
   font-size: 19px;
   font-weight: 600;
 }
@@ -986,13 +986,13 @@ a {
   }
 
   .mobile-all-button strong {
-    font-family: Georgia, serif;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
     font-size: 18px;
     line-height: 1;
   }
 
   .mobile-all-button small {
-    font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
     font-size: 10px;
     font-weight: 750;
     letter-spacing: 0.08em;
@@ -1065,7 +1065,7 @@ a {
   .mobile-directory-heading > span {
     flex: 0 0 auto;
     color: var(--burgundy);
-    font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-be-vietnam-pro), "Segoe UI", Arial, sans-serif;
     font-size: 10px;
     font-weight: 750;
     letter-spacing: 0.12em;
