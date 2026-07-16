@@ -237,7 +237,7 @@ export default function Home() {
                       <a
                         className="call-link"
                         href={`tel:+84${branch.phone.slice(1)}`}
-                        aria-label={`G\u1ecdi ${branch.name}: ${formatPhone(branch.phone)}`}
+                        aria-label={`Gọi ${branch.name}: ${formatPhone(branch.phone)}`}
                       >
                         <span aria-hidden="true">G\u1eccI</span>{formatPhone(branch.phone)}
                       </a>
